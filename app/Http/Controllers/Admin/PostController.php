@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\NewPostMail;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -75,7 +76,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("admin.posts.create");
+        $tags = Tag::all();
+        return view("admin.posts.create", compact("tags"));
     }
 
     /* -------------- S T O R E -------------- */
@@ -92,6 +94,7 @@ class PostController extends Controller
         $validatedData = $request->validate([
             "title" => "required|min:10",
             "content" => "required|min:10",
+            "tags" => "nullable|exists:tags,id",
         ]);
 
         // Salvataggio a db
@@ -104,6 +107,13 @@ class PostController extends Controller
 
         // Salvataggio
         $post->save();
+
+        // Gestione ------ T A G S ------ (devo farla dopo il save perchè prima non ho id per il post)
+        if (key_exists("tags", $validatedData)) {
+
+            $post->tags()->sync($validatedData["tags"]);
+        }
+
 
         // Redirect alla pagina show
         return redirect()->route("admin.posts.show", $post->slug);
@@ -138,8 +148,9 @@ class PostController extends Controller
     public function edit($slug)
     {
         $post = $this->findBySlug($slug);
+        $tags = Tag::all();
 
-        return view("admin.posts.edit", compact("post"));
+        return view("admin.posts.edit", compact("post", "tags"));
     }
 
     /* -------------- U P D A T E -------------- */
@@ -155,13 +166,30 @@ class PostController extends Controller
     {
         $validatedData = $request->validate([
             "title" => "required|min:10",
-            "content" => "required|min:10"
+            "content" => "required|min:10",
+            "tags" => "nullable|exists:tags,id",
         ]);
         $post = $this->findBySlug($slug);
 
         if ($validatedData["title"] !== $post->title) {
             // genero un nuovo slug
             $post->slug = $this->generateSlug($validatedData["title"]);
+        }
+
+        // Gestione ------ T A G S ------
+
+        // CON DETACH/ATTACH se l'utente non ha selezionato nulla, significa che non vuole nessun tag, per cui faccio un detach
+        // $post->tags()->detach();
+
+        if (key_exists("tags", $validatedData)) {
+
+            // CON DETACH/ATTACH vado ad aggiungere i tag selezionati
+            // $post->tags()->attach($validatedData["tags"]);
+
+            $post->tags()->sync($validatedData["tags"]);
+        } else {
+
+            $post->tags()->sync([]);
         }
 
         $post->update($validatedData);

@@ -21,6 +21,21 @@
                     <dt>Autore</dt>
                     <dd>{{ $post->user->name }}</dd>
 
+                    <dt>Tags</dt>
+                    <dd>
+                        {{ $post->tags->implode("name", " - ")}}
+                        
+                        {{-- Versione lunga per fare la stessa cosa:
+
+                        @foreach ($post->tags as $tag)
+                            {{ $tag->name }}
+
+                            @if(!$loop->last)
+                            <span> -</span>
+                            @endif
+                        @endforeach --}}
+                    </dd>
+
                 </dl>
                 <a href="{{ route('admin.posts.edit', ['post' => $post->slug]) }}"
                    class="btn btn-warning">

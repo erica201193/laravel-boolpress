@@ -15,4 +15,10 @@ class Post extends Model
     {
         return $this->belongsTo("App\User");
     }
+
+    // Metodo relazione many to many con Tag
+    public function tags() 
+    {
+        return $this->belongsToMany("App\Tag");
+    }
 }
