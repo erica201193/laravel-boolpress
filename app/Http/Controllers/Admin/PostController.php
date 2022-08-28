@@ -104,7 +104,7 @@ class PostController extends Controller
         $post->save();
 
         // Redirect alla pagina show
-        return redirect()->route("admin.posts.show", $post->id);
+        return redirect()->route("admin.posts.show", $post->slug);
 
 
         // M A I L S
