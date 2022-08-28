@@ -28,6 +28,10 @@ Route::middleware("auth")
 ->group(function () {
     Route::get('/', 'HomeController@index')->name('index');
 
+    Route::get("/users", "UserController@index")->name("users.index");
+    Route::patch("/users/{user}", "UserController@update")->name("users.update");
+    Route::get("/users/{user}/edit", "UserController@edit")->name("users.edit");
+
     Route::resource("posts", "PostController");
 });
 

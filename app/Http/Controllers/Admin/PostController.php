@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\NewPostMail;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -96,6 +97,7 @@ class PostController extends Controller
         // Salvataggio a db
         $post = new Post();
         $post->fill($validatedData);
+        $post->user_id = Auth::user()->id;
 
         // Creazione slug
         $post->slug = $this->generateSlug($post->title);
