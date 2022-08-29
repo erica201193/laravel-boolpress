@@ -8,6 +8,7 @@ use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -97,6 +98,9 @@ class PostController extends Controller
             "tags" => "nullable|exists:tags,id",
         ]);
 
+        // Immagine di copertina
+
+
         // Salvataggio a db
         $post = new Post();
         $post->fill($validatedData);
@@ -168,8 +172,24 @@ class PostController extends Controller
             "title" => "required|min:10",
             "content" => "required|min:10",
             "tags" => "nullable|exists:tags,id",
+            "cover_img" => "nullable|image"
         ]);
+
         $post = $this->findBySlug($slug);
+
+        // Immagine di copertina
+
+        if (key_exists("cover_img", $validatedData)) {
+
+            if ($post->cover_img) {
+                Storage::delete($post->cover_img);
+            }
+
+            // Salvo il file sul server
+            $coverImg = Storage::put("/post_covers", $validatedData["cover_img"]);
+
+            $post->cover_img = $coverImg;
+        }
 
         if ($validatedData["title"] !== $post->title) {
             // genero un nuovo slug

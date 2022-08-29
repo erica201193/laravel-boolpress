@@ -28,52 +28,70 @@
                 </div>
                 <form action="{{ route('admin.posts.update', ['post' => $post->slug]) }}" method="post"
                     enctype="multipart/form-data">
+
                     @csrf
                     @method('PUT')
-                    <div class="form-group">
-                        <label>Titolo</label>
-                        <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                            placeholder="Inserisci il titolo" value="{{ old('title', $post->title) }}" required>
-                        @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>Contenuto</label>
-                        <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="10"
-                            placeholder="Inizia a scrivere qualcosa..." required>{{ old('content', $post->content) }}</textarea>
-                        @error('content')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
 
                     <div class="form-group">
-                        <label>Tags</label>
-                        <select type="text" name="tags[]" class="form-control @error('tags') is-invalid @enderror"
-                            multiple>
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}" {{ $post->tags->contains($tag) ? 'selected' : '' }}>
-                                    {{ $tag->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('tags')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <label for="cover_img_file" class="form-label">Copertina</label>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-activity">
-                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                <polyline points="7 3 7 8 15 8"></polyline>
-                            </svg> Salva post
-                        </button>
+                    <div class="d-flex">
+                        <img class="img-thumbnail" style="width: 200px" src="{{ asset('storage/' . $post->cover_img) }}">
+
+                        <img id="new_cover_img_container" src="" alt="">
+
+                        <input type="file" name="cover_img"
+                            class="form-control-file @error('cover_img') is-invalid @enderror" id="cover_img_file"
+                            value="{{ old('cover_img', $post->cover_img) }}">
                     </div>
-                </form>
+                    @error('cover_img')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
             </div>
+
+            <div class="form-group">
+                <label>Titolo</label>
+                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                    placeholder="Inserisci il titolo" value="{{ old('title', $post->title) }}" required>
+                @error('title')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label>Contenuto</label>
+                <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="10"
+                    placeholder="Inizia a scrivere qualcosa..." required>{{ old('content', $post->content) }}</textarea>
+                @error('content')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label>Tags</label>
+                <select type="text" name="tags[]" class="form-control @error('tags') is-invalid @enderror" multiple>
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->id }}" {{ $post->tags->contains($tag) ? 'selected' : '' }}>
+                            {{ $tag->name }}</option>
+                    @endforeach
+                </select>
+                @error('tags')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-activity">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg> Salva post
+                </button>
+            </div>
+            </form>
         </div>
+    </div>
     </div>
 @endsection
