@@ -12620,7 +12620,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/ericamancini/Boolean/laravel-api/resources/js/frontend.js */"./resources/js/frontend.js");
+module.exports = __webpack_require__(/*! /Users/ericamancini/Boolean/laravel-api-1/resources/js/frontend.js */"./resources/js/frontend.js");
 
 
 /***/ })

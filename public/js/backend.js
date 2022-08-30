@@ -49653,8 +49653,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/ericamancini/Boolean/laravel-api/resources/js/backend.js */"./resources/js/backend.js");
-module.exports = __webpack_require__(/*! /Users/ericamancini/Boolean/laravel-api/resources/sass/frontend/frontend.scss */"./resources/sass/frontend/frontend.scss");
+__webpack_require__(/*! /Users/ericamancini/Boolean/laravel-api-1/resources/js/backend.js */"./resources/js/backend.js");
+module.exports = __webpack_require__(/*! /Users/ericamancini/Boolean/laravel-api-1/resources/sass/frontend/frontend.scss */"./resources/sass/frontend/frontend.scss");
 
 
 /***/ })
