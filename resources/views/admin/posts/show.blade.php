@@ -13,7 +13,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <img class="img-fluid" src="{{ Storage::url($post->cover_img) }}">
+                        <img class="img-fluid" src="{{ asset("storage/" . $post->cover_img)}}">
                     </div>
                     <div class="col">
                         <dl>

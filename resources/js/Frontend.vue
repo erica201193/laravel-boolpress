@@ -1,16 +1,18 @@
-<!-- <template>
-    <h1>Hello vue.js</h1>
+<template>
+    <div>
+        <h1>Hello vue.js <br> {{ message }}</h1>
+        <p>Questa è la mia pagina pubblica fatta in vue</p>
+    </div>
 </template>
 
-<script>
-import { defineComponent } from '@vue/composition-api'
 
-export default defineComponent({
-    data() { {
-        message: "Ciao sono un sexy componente Vue, baby"
-    }
-        return
-        
+<script>
+export default {
+    components: {},
+    data() {
+        return {
+            message: "Ciao sono un sexy componente Vue, baby",
+        };
     },
-})
-</script> -->
+};
+</script>
