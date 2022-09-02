@@ -16,7 +16,7 @@ class PostController extends Controller
     /* SLUG */
     private function findBySlug($slug)
     {
-        $post = Post::where("slug", $slug)->first();
+        $post = Post::where("slug", $slug)->withTrashed()->first();
 
         if (!$post) {
             abort(404);
@@ -228,6 +228,15 @@ class PostController extends Controller
     public function destroy($slug)
     {
         $post = $this->findBySlug($slug);
+
+        if($post->trashed()) {
+
+            $post->tags()->detach();
+
+            $post->forceDelete();
+        } else {
+            $post->delete();
+        }
 
         $post->delete();
 
